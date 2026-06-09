@@ -27,7 +27,7 @@ public class BookService {
 
     // 도서 조회수 증가
     public Book increaseViewCount(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
+        Book book = bookRepository.findById(id).orElseThrow(BookNotFoundException::new); // 에러처리 적용
 
         if (book.getViews() == null) {
             book.setViews(0L);

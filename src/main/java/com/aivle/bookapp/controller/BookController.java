@@ -23,6 +23,7 @@ public class BookController {
         return bookService.searchBooks(q);
     }
 
+    // 도서 조회하기
     @PatchMapping("/{id}/views")
     public Book increaseViewCount(@PathVariable Long id) {
         return bookService.increaseViewCount(id);
