@@ -12,12 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookService {
     private final BookRepository bookRepository;
 
-    @Transactional(readOnly = true)
-    public Book findById(Long id) {
-        return bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+    public Book getBookDetail(Long id) {
+        return bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
     }
 
-    @Transactional
     public void deleteBook(Long id){
         if(bookRepository.existsById(id)){
             bookRepository.deleteById(id);
@@ -26,14 +24,12 @@ public class BookService {
         }
     }
 
-    @Transactional
     public Book create(Book book){
         return bookRepository.save(book);
     }
 
-    @Transactional
     public Book update(Long id, Book book){
-        Book existing = findById(id);
+        Book existing = getBookDetail(id);
 
         if(book.getTitle() != null){
             existing.setTitle(book.getTitle());
