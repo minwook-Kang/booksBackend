@@ -1,4 +1,14 @@
 package com.aivle.bookapp.repository;
 
-public class BookRepository {
+import com.aivle.bookapp.domain.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface BookRepository extends JpaRepository<Book, Long> {
+    List<Book> findByTitleContainingOrAuthorContainingOrContentsContaining(
+            String title,
+            String author,
+            String contents
+    );
 }
