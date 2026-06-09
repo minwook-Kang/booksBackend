@@ -14,27 +14,22 @@ public class BookController {
 
     private final BookService bookService;
 
-    @GetMapping("/books/{id}")
-    public Book getBook(@PathVariable Long id){
-        return bookService.findById(id);
-    }
-
     @DeleteMapping("/books/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id){
+    public ResponseEntity<Void> BookDelete(@PathVariable Long id){
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
 
     }
 
     @PostMapping("/books")
-    public ResponseEntity<Book> createBook(@Valid @RequestBody Book book){
+    public ResponseEntity<Book> BookCreate(@Valid @RequestBody Book book){
         Book saved = bookService.create(book);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PatchMapping("/books/{id}")
-    public Book updateBook(@PathVariable Long id, @RequestBody Book book){
+    public Book BookUpdate(@PathVariable Long id, @RequestBody Book book){
         return bookService.update(id, book);
     }
 }
