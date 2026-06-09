@@ -45,8 +45,8 @@ public class BookService {
         if(book.getGenre() != null){
             existing.setGenre(book.getGenre());
         }
-        if(book.getImageUrl() != null){
-            existing.setImageUrl(book.getImageUrl());
+        if(book.getCoverImageUrl() != null){
+            existing.setCoverImageUrl(book.getCoverImageUrl());
         }
 
         return bookRepository.save(existing);
