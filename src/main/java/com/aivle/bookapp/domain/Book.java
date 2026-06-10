@@ -26,7 +26,9 @@ public class Book {
     @Column(nullable = false, columnDefinition = "TEXT")
     @NotBlank
     private String content;
-    
+
+    @Column(nullable = false)
+    @NotBlank
     private String genre;
 
 

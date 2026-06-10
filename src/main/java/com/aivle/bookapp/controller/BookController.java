@@ -50,7 +50,7 @@ public class BookController {
     public Book BookUpdate(@PathVariable Long id, @RequestBody Book book){
         return bookService.update(id, book);
     }
-  
+
     // 도서 키워드 검색 GET /books q?=
     @GetMapping("/search")
     public List<Book> getBooks(@RequestParam(required = false) String q) {
