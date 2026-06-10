@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ReviewResponse {
 
-    private Long id;
+    private Long reviewId;
     private Long bookId;
     private String content;
     private Double rating;
@@ -19,7 +19,7 @@ public class ReviewResponse {
 
     public static ReviewResponse from(Review review) {
         return ReviewResponse.builder()
-                .id(review.getId())
+                .reviewId(review.getId())
                 .bookId(review.getBook().getId())
                 .content(review.getContent())
                 .rating(review.getRating())
