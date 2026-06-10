@@ -42,3 +42,5 @@ out/
 *.mv.db
 *.trace.db
 data/
+.gradle/
+build/
