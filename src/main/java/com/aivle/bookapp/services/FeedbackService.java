@@ -2,6 +2,9 @@ package com.aivle.bookapp.services;
 
 import com.aivle.bookapp.domain.Feedback;
 import com.aivle.bookapp.domain.Review;
+import com.aivle.bookapp.dto.feedback.FeedbackCreateRequest;
+import com.aivle.bookapp.dto.feedback.FeedbackResponse;
+import com.aivle.bookapp.dto.feedback.FeedbackUpdateRequest;
 import com.aivle.bookapp.global.exception.BusinessException;
 import com.aivle.bookapp.global.exception.ErrorCode;
 import com.aivle.bookapp.repository.FeedbackRepository;
@@ -18,28 +21,41 @@ public class FeedbackService {
     private final ReviewRepository reviewRepository;
 
     // 피드백 조회
-    public Feedback getFeedback(Long reviewId) {
-        return feedbackRepository.findByReviewId(reviewId).orElseThrow(() -> new BusinessException(ErrorCode.FEEDBACK_NOT_FOUND));
+    public FeedbackResponse getFeedback(Long reviewId) {
+        Feedback feedback = feedbackRepository.findByReviewId(reviewId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.FEEDBACK_NOT_FOUND));
+
+        return FeedbackResponse.from(feedback);
     }
 
     // 피드백 등록
-    public Feedback createFeedback(Long reviewId, Feedback feedback) {
-        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new BusinessException(ErrorCode.REVIEW_NOT_FOUND));
+    public FeedbackResponse createFeedback(Long reviewId, FeedbackCreateRequest request) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.REVIEW_NOT_FOUND));
 
         if (feedbackRepository.existsByReviewId(reviewId)) {
             throw new BusinessException(ErrorCode.FEEDBACK_ALREADY_EXISTS);
         }
 
+        if (request.getContent() == null || request.getContent().isBlank()) {
+            throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
+        }
+
+        Feedback feedback = new Feedback();
         feedback.setReview(review);
+        feedback.setContent(request.getContent());
         feedback.setCreatedAt(LocalDateTime.now());
         feedback.setUpdatedAt(LocalDateTime.now());
 
-        return feedbackRepository.save(feedback);
+        Feedback savedFeedback = feedbackRepository.save(feedback);
+
+        return FeedbackResponse.from(savedFeedback);
     }
 
     // 피드백 수정
-    public Feedback updateFeedback(Long feedbackId, Feedback request) {
-        Feedback feedback = feedbackRepository.findById(feedbackId).orElseThrow(() -> new BusinessException(ErrorCode.FEEDBACK_NOT_FOUND));
+    public FeedbackResponse updateFeedback(Long feedbackId, FeedbackUpdateRequest request) {
+        Feedback feedback = feedbackRepository.findById(feedbackId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.FEEDBACK_NOT_FOUND));
 
         if (request.getContent() == null || request.getContent().isBlank()) {
             throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
@@ -48,7 +64,9 @@ public class FeedbackService {
         feedback.setContent(request.getContent());
         feedback.setUpdatedAt(LocalDateTime.now());
 
-        return feedbackRepository.save(feedback);
+        Feedback updatedFeedback = feedbackRepository.save(feedback);
+
+        return FeedbackResponse.from(updatedFeedback);
     }
 
     // 피드백 삭제
