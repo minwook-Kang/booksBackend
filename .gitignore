@@ -37,3 +37,8 @@ out/
 .vscode/
 
 /.env
+
+### mock db ###
+*.mv.db
+*.trace.db
+data/
