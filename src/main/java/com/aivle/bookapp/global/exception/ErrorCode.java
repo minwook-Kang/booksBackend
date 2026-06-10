@@ -24,7 +24,13 @@ public enum ErrorCode {
     EXTERNAL_SERVICE_ERROR(HttpStatus.SERVICE_UNAVAILABLE, "CMN009", "외부 서비스가 일시적으로 사용 불가능합니다."),
 
     // 책 (BOOK)
-    BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "BOOK001", "찾고자 하는 책을 찾을 수 없습니다.");
+    BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "BOOK001", "찾고자 하는 책을 찾을 수 없습니다."),
+
+    // 리뷰 (REVIEW)
+    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "REVIEW001", "찾고자 하는 리뷰를 찾을 수 없습니다."),
+
+    // 피드백 (FEEDBACK)
+    FEEDBACK_NOT_FOUND(HttpStatus.NOT_FOUND, "FEEDBACK001", "찾고자 하는 피드백을 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;   // 응답 HTTP 상태 코드
     private final String code;             // 에러 식별 코드 (클라이언트 분기용)
