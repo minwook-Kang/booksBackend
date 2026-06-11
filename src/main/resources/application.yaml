@@ -6,7 +6,7 @@ spring:
     name: bookapp
 
   datasource:
-    url: jdbc:h2:file:./data/bookdb
+    url: jdbc:h2:file:./data/bookdb;AUTO_SERVER=TRUE
     driver-class-name: org.h2.Driver
     username: mini5
     password: 1234
@@ -18,7 +18,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     defer-datasource-initialization: true
     properties:
@@ -27,7 +27,7 @@ spring:
 
   sql:
     init:
-      mode: never
+      mode: always
 
 cloudinary:
   cloud-name: dyi23dc8x

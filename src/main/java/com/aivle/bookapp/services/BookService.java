@@ -1,8 +1,13 @@
 package com.aivle.bookapp.services;
 
 import com.aivle.bookapp.domain.Book;
+import com.aivle.bookapp.domain.Genre;
+import com.aivle.bookapp.dto.book.request.BookCreateRequest;
+import com.aivle.bookapp.dto.book.request.BookUpdateRequest;
 import com.aivle.bookapp.global.exception.book.BookNotFoundException;
+import com.aivle.bookapp.global.exception.genre.GenreNotFoundException;
 import com.aivle.bookapp.repository.BookRepository;
+import com.aivle.bookapp.repository.GenreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,75 +18,70 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
+    private final GenreRepository genreRepository;
 
-    // 도서 삭제
-    public void deleteBook(Long id){
-        if(bookRepository.existsById(id)){
-            bookRepository.deleteById(id);
-        }else{
-            throw new BookNotFoundException();
-        }
-    }
-
-    // 도서 등록
-    public Book create(Book book){
+    @Transactional
+    public Book create(BookCreateRequest req) {
+        Book book = new Book();
+        book.setTitle(req.title());
+        book.setAuthor(req.author());
+        book.setContent(req.content());
+        book.setCoverImageUrl(req.coverImageUrl());
+        book.setGenre(findGenre(req.genreId()));
         return bookRepository.save(book);
     }
 
-    // 도서 수정
-    public Book update(Long id, Book book){
+    @Transactional
+    public Book update(Long id, BookUpdateRequest req) {
         Book existing = getBookDetail(id);
-
-        if(book.getTitle() != null){
-            existing.setTitle(book.getTitle());
-        }
-        if(book.getAuthor() != null){
-            existing.setAuthor(book.getAuthor());
-        }
-        if(book.getContent() != null){
-            existing.setContent(book.getContent());
-        }
-        if(book.getGenre() != null){
-            existing.setGenre(book.getGenre());
-        }
-        if(book.getCoverImageUrl() != null){
-            existing.setCoverImageUrl(book.getCoverImageUrl());
-        }
-
-        return bookRepository.save(existing);
+        if (req.title() != null)         existing.setTitle(req.title());
+        if (req.author() != null)        existing.setAuthor(req.author());
+        if (req.content() != null)       existing.setContent(req.content());
+        if (req.coverImageUrl() != null) existing.setCoverImageUrl(req.coverImageUrl());
+        if (req.genreId() != null)       existing.setGenre(findGenre(req.genreId()));
+        return existing;
     }
 
-    // 도서 전체 조회
+    @Transactional
+    public void deleteBook(Long id) {
+        if (!bookRepository.existsById(id)) {
+            throw new BookNotFoundException();
+        }
+        bookRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
     public List<Book> getBookList() {
         return bookRepository.findAll();
     }
 
-    // 해당 도서 조회
+    @Transactional(readOnly = true)
     public Book getBookDetail(Long id) {
         return bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
     }
 
-    // 도서 키워드 검색
+    @Transactional(readOnly = true)
     public List<Book> searchBooks(String keyword) {
-        String trimmedKeyword = keyword.trim();
-
-        return bookRepository.findByTitleContainingOrAuthorContainingOrContentContaining(
-                trimmedKeyword,
-                trimmedKeyword,
-                trimmedKeyword
-        );
+        String k = keyword.trim();
+        return bookRepository
+                .findByTitleContainingOrAuthorContainingOrContentContaining(k, k, k);
     }
 
-    // 도서 조회수 증가
+    @Transactional
     public Book increaseViewCount(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(BookNotFoundException::new); // 에러처리 적용
-
-        if (book.getViews() == null) {
-            book.setViews(0);
-        }
+        Book book = getBookDetail(id);
+        if (book.getViews() == null) book.setViews(0);
         book.setViews(book.getViews() + 1);
-
-        return bookRepository.save(book);
+        return book;
     }
 
+    @Transactional(readOnly = true)
+    public List<Book> getBooksByGenre(Long genreId) {
+        return bookRepository.findByGenreId(genreId);
+    }
+
+    private Genre findGenre(Long genreId) {
+        return genreRepository.findById(genreId)
+                .orElseThrow(GenreNotFoundException::new);
+    }
 }

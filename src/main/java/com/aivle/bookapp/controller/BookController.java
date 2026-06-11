@@ -1,7 +1,10 @@
 package com.aivle.bookapp.controller;
 
 
-import com.aivle.bookapp.domain.Book;
+import com.aivle.bookapp.dto.book.request.BookCreateRequest;
+import com.aivle.bookapp.dto.book.response.BookDetailResponse;
+import com.aivle.bookapp.dto.book.response.BookResponse;
+import com.aivle.bookapp.dto.book.request.BookUpdateRequest;
 import com.aivle.bookapp.services.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,51 +22,51 @@ public class BookController {
 
     // 목록 조회: GET /books
     @GetMapping
-    public List<Book> BookList() {
-        return bookService.getBookList();
+    public List<BookResponse> bookList() {
+        return bookService.getBookList().stream()
+                .map(BookResponse::from).toList();
     }
 
     // 상세 조회: GET /books/{id}
     @GetMapping("/{id}")
-    public Book BookDetail(@PathVariable Long id) {
-        return bookService.getBookDetail(id);
+    public BookDetailResponse bookDetail(@PathVariable Long id) {
+        return BookDetailResponse.from(bookService.getBookDetail(id));
     }
 
-    // 도서 삭제 DELETE /books/{id}
+    // 도서 등록: POST /books
+    @PostMapping
+    public ResponseEntity<BookDetailResponse> bookCreate(@Valid @RequestBody BookCreateRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(BookDetailResponse.from(bookService.create(request)));
+    }
+
+    // 도서 수정: PATCH /books/{id}
+    @PatchMapping("/{id}")
+    public BookDetailResponse bookUpdate(@PathVariable Long id, @RequestBody BookUpdateRequest request) {
+        return BookDetailResponse.from(bookService.update(id, request));
+    }
+
+    // 도서 삭제: DELETE /books/{id}
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> BookDelete(@PathVariable Long id){
+    public ResponseEntity<Void> bookDelete(@PathVariable Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
-
     }
 
-    // 도서 등록 POST /books
-    @PostMapping
-    public ResponseEntity<Book> BookCreate(@Valid @RequestBody Book book){
-        Book saved = bookService.create(book);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-    }
-
-    // 도서 수정 POST /books/{id}
-    @PatchMapping("/{id}")
-    public Book BookUpdate(@PathVariable Long id, @RequestBody Book book){
-        return bookService.update(id, book);
-    }
-
-    // 도서 키워드 검색 GET /books q?=
+    // 키워드 검색: GET /books/search?q=
     @GetMapping("/search")
-    public List<Book> getBooks(@RequestParam(required = false) String q) {
-        if (q == null || q.trim().isEmpty()) {
-            return bookService.getBookList();
+    public List<BookResponse> searchBooks(@RequestParam(required = false) String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return bookList();
         }
-        return bookService.searchBooks(q);
+        return bookService.searchBooks(keyword).stream()
+                .map(BookResponse::from)
+                .toList();
     }
 
-    // 도서 조회하기 Patch
+    // 조회수 증가: PATCH /books/{id}/views
     @PatchMapping("/{id}/views")
-    public Book increaseViewCount(@PathVariable Long id) {
-        return bookService.increaseViewCount(id);
+    public BookDetailResponse increaseViewCount(@PathVariable Long id) {
+        return BookDetailResponse.from(bookService.increaseViewCount(id));
     }
-
 }
