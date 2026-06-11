@@ -6,7 +6,7 @@ spring:
     name: bookapp
 
   datasource:
-    url: jdbc:h2:file:./data/bookdb;AUTO_SERVER=TRUE
+    url: jdbc:h2:file:./data/bookdb
     driver-class-name: org.h2.Driver
     username: mini5
     password: 1234
