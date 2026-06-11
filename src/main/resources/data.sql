@@ -15,132 +15,142 @@
 
 
 -- =========================================================
--- BOOK DATA
+-- GENRE DATA  (book보다 먼저 INSERT — FK 참조 대상)
 -- =========================================================
+INSERT INTO genre (id, name) VALUES
+                                 (1, '프로그래밍'), (2, '백엔드'), (3, '소프트웨어공학'), (4, '인공지능'),
+                                 (5, '데이터분석'), (6, '고전문학'), (7, '동화'), (8, '한국소설'),
+                                 (9, '판타지'), (10, '추리'), (11, '역사'), (12, '과학'),
+                                 (13, '사회과학'), (14, '심리학'), (15, '에세이'), (16, '자기계발'),
+                                 (17, '경제경영'), (18, '트렌드'), (19, '청소년문학'), (20, '스릴러'),
+                                 (21, '교양');
 
+
+-- =========================================================
+-- BOOK DATA  (genre 문자열 → genre_id 숫자)
+-- =========================================================
 INSERT INTO book
-(id, title, author, content, genre, cover_image_url, views, created_at, updated_at)
+(id, title, author, content, genre_id, cover_image_url, views, created_at, updated_at)
 VALUES
     (1, '자바의 정석', '남궁성',
      '자바의 기본 문법, 객체지향 프로그래밍, 컬렉션, 예외 처리, 스레드 등 자바 입문자가 반드시 알아야 할 내용을 단계적으로 다루는 프로그래밍 입문서입니다.',
-     '프로그래밍', NULL, 152, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     1, NULL, 152, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (2, '스프링 부트 입문', '김영한',
      'Spring Boot 기반 웹 애플리케이션 개발 흐름을 익히고, Controller, Service, Repository, JPA 구조를 실습 중심으로 이해할 수 있는 백엔드 개발 입문서입니다.',
-     '백엔드', NULL, 98, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     2, NULL, 98, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (3, '클린 코드', '로버트 C. 마틴',
      '좋은 코드와 나쁜 코드의 차이를 사례 중심으로 설명하며, 네이밍, 함수 분리, 주석, 객체 설계 등 유지보수 가능한 소프트웨어를 작성하는 원칙을 다룹니다.',
-     '소프트웨어공학', NULL, 214, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     3, NULL, 214, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (4, '혼자 공부하는 머신러닝+딥러닝', '박해선',
      '머신러닝과 딥러닝의 핵심 개념을 파이썬 예제와 함께 단계적으로 설명하는 AI 입문서로, 분류, 회귀, 신경망, 합성곱 신경망 등을 다룹니다.',
-     '인공지능', NULL, 173, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     4, NULL, 173, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (5, '모두의 데이터 분석 with 파이썬', '송석리',
      '파이썬을 활용해 데이터 수집, 전처리, 시각화, 기초 통계 분석 과정을 실습 중심으로 학습할 수 있는 데이터 분석 입문서입니다.',
-     '데이터분석', NULL, 126, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     5, NULL, 126, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (6, '데미안', '헤르만 헤세',
      '한 인간이 자기 자신을 찾아가는 내면의 성장 과정을 상징적으로 그려낸 고전 성장소설로, 자아와 세계의 충돌을 섬세하게 다룹니다.',
-     '고전문학', NULL, 181, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     6, NULL, 181, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (7, '어린 왕자', '생텍쥐페리',
      '어른이 되어 잊어버린 순수함과 관계의 의미를 짧고 아름다운 이야기로 전하는 고전 동화입니다.',
-     '동화', NULL, 266, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     7, NULL, 266, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (8, '불편한 편의점', '김호연',
      '서울역 인근 편의점을 배경으로 다양한 인물들의 상처와 회복을 따뜻하게 그려낸 현대 한국소설입니다.',
-     '한국소설', NULL, 137, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     8, NULL, 137, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (9, '채식주의자', '한강',
      '평범한 일상 속 균열을 통해 인간 내면의 폭력성, 욕망, 타인의 시선을 강렬하게 그려낸 한국문학 작품입니다.',
-     '한국소설', NULL, 142, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     8, NULL, 142, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (10, '달러구트 꿈 백화점', '이미예',
      '꿈을 사고파는 백화점이라는 상상력 있는 공간을 배경으로 위로와 성장의 이야기를 전하는 판타지 소설입니다.',
-     '판타지', NULL, 156, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     9, NULL, 156, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (11, '해리 포터와 마법사의 돌', 'J.K. 롤링',
      '마법 세계에 입문한 소년 해리 포터가 친구들과 함께 성장하고 모험을 시작하는 판타지 시리즈의 첫 번째 이야기입니다.',
-     '판타지', NULL, 289, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     9, NULL, 289, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (12, '셜록 홈즈의 모험', '아서 코난 도일',
      '명탐정 셜록 홈즈와 왓슨 박사가 다양한 사건을 추리하고 해결하는 고전 추리 단편집입니다.',
-     '추리', NULL, 112, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     10, NULL, 112, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (13, '용의자 X의 헌신', '히가시노 게이고',
      '치밀한 트릭과 인간적인 감정이 결합된 추리소설로, 범죄의 진실과 헌신의 의미를 묵직하게 그려냅니다.',
-     '추리', NULL, 148, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     10, NULL, 148, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (14, '사피엔스', '유발 하라리',
      '인류의 기원부터 농업혁명, 과학혁명, 현대 문명까지 거대한 흐름으로 인간의 역사를 해석한 교양서입니다.',
-     '역사', NULL, 321, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     11, NULL, 321, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (15, '총, 균, 쇠', '재레드 다이아몬드',
      '문명의 발전 차이를 환경, 지리, 생태적 조건의 관점에서 분석하며 인류사의 불균형을 설명하는 역사 교양서입니다.',
-     '역사', NULL, 238, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     11, NULL, 238, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (16, '코스모스', '칼 세이건',
      '우주, 생명, 과학적 사고의 아름다움을 문학적인 문체로 풀어낸 대표적인 과학 교양서입니다.',
-     '과학', NULL, 244, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     12, NULL, 244, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (17, '시간은 흐르지 않는다', '카를로 로벨리',
      '현대 물리학의 관점에서 시간의 본질을 탐구하며, 우리가 당연하게 여기는 시간 감각을 새롭게 바라보게 하는 과학 교양서입니다.',
-     '과학', NULL, 91, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     12, NULL, 91, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (18, '팩트풀니스', '한스 로슬링',
      '세상을 오해하게 만드는 인간의 본능을 짚고, 데이터를 통해 현실을 더 정확하게 바라보는 방법을 제시합니다.',
-     '사회과학', NULL, 119, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     13, NULL, 119, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (19, '미움받을 용기', '기시미 이치로',
      '아들러 심리학을 바탕으로 타인의 시선에서 벗어나 자기 삶을 선택하는 용기에 대해 대화 형식으로 설명하는 책입니다.',
-     '심리학', NULL, 167, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     14, NULL, 167, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (20, '죽고 싶지만 떡볶이는 먹고 싶어', '백세희',
      '일상의 우울과 불안을 솔직한 상담 기록 형식으로 풀어내며, 마음의 회복과 자기 이해를 다루는 에세이입니다.',
-     '에세이', NULL, 134, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     15, NULL, 134, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (21, '아주 작은 습관의 힘', '제임스 클리어',
      '작은 행동의 반복이 어떻게 큰 변화를 만들어내는지 습관 형성의 원리와 실천 방법을 중심으로 설명하는 자기계발서입니다.',
-     '자기계발', NULL, 198, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     16, NULL, 198, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (22, '역행자', '자청',
      '자기계발과 경제적 자유를 주제로 기존 사고방식을 바꾸고 실행력을 높이는 방법을 제시하는 책입니다.',
-     '자기계발', NULL, 203, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     16, NULL, 203, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (23, '돈의 속성', '김승호',
      '돈을 대하는 태도, 자산 관리, 경제적 독립에 대한 관점을 현실적인 언어로 설명하는 재테크 도서입니다.',
-     '경제경영', NULL, 175, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     17, NULL, 175, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (24, '넛지', '리처드 탈러',
      '사람들의 선택을 강제하지 않으면서 더 나은 방향으로 유도하는 행동경제학의 핵심 개념을 설명하는 책입니다.',
-     '경제경영', NULL, 104, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     17, NULL, 104, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (25, '트렌드 코리아 2026', '김난도 외',
      '소비 트렌드와 사회 변화를 분석하고 다가올 시장 흐름을 예측하는 트렌드 전망서입니다.',
-     '트렌드', NULL, 87, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     18, NULL, 87, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (26, '아몬드', '손원평',
      '감정을 느끼기 어려운 소년의 성장 과정을 통해 공감, 폭력, 관계의 의미를 다루는 한국 성장소설입니다.',
-     '청소년문학', NULL, 161, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     19, NULL, 161, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (27, '완전한 행복', '정유정',
      '행복이라는 이름 아래 감춰진 욕망과 집착을 긴장감 있게 그려낸 한국 장편소설입니다.',
-     '스릴러', NULL, 93, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     20, NULL, 93, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (28, '지적 대화를 위한 넓고 얕은 지식', '채사장',
      '역사, 경제, 정치, 사회, 윤리 등 다양한 분야의 기본 지식을 연결해 설명하는 교양 입문서입니다.',
-     '교양', NULL, 205, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     21, NULL, 205, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (29, '나는 나로 살기로 했다', '김수현',
      '타인의 기준에 흔들리지 않고 자기 삶의 태도를 세우는 법을 담은 그림 에세이입니다.',
-     '에세이', NULL, 122, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+     15, NULL, 122, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     (30, '도파민네이션', '애나 렘키',
      '쾌락과 중독, 균형의 문제를 현대 사회의 행동 패턴과 연결해 설명하는 심리·의학 교양서입니다.',
-     '심리학', NULL, 116, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
+     14, NULL, 116, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- =========================================================
 -- REVIEW DATA
@@ -316,6 +326,7 @@ VALUES
 -- H2 기준 문법
 -- =========================================================
 
+ALTER TABLE genre ALTER COLUMN id RESTART WITH 22;
 ALTER TABLE book ALTER COLUMN id RESTART WITH 31;
 ALTER TABLE review ALTER COLUMN id RESTART WITH 78;
 ALTER TABLE feedback ALTER COLUMN id RESTART WITH 35;

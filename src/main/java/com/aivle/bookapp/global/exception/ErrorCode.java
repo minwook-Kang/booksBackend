@@ -31,7 +31,11 @@ public enum ErrorCode {
 
     // 피드백 (FEEDBACK)
     FEEDBACK_NOT_FOUND(HttpStatus.NOT_FOUND, "FEEDBACK001", "찾고자 하는 피드백을 찾을 수 없습니다."),
-    FEEDBACK_ALREADY_EXISTS(HttpStatus.CONFLICT, "FEEDBACK002", "이미 해당 리뷰에 피드백이 존재합니다.");
+    FEEDBACK_ALREADY_EXISTS(HttpStatus.CONFLICT, "FEEDBACK002", "이미 해당 리뷰에 피드백이 존재합니다."),
+
+    // 장르 (GENRE)
+    GENRE_NOT_FOUND(HttpStatus.NOT_FOUND, "GENRE001", "찾고자 하는 장르를 찾을 수 없습니다."),
+    GENRE_ALREADY_EXISTS(HttpStatus.CONFLICT, "GENRE002", "이미 존재하는 장르입니다.");
 
     private final HttpStatus httpStatus;   // 응답 HTTP 상태 코드
     private final String code;             // 에러 식별 코드 (클라이언트 분기용)
