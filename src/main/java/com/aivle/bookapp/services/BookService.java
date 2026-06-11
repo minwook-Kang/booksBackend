@@ -34,11 +34,21 @@ public class BookService {
     @Transactional
     public Book update(Long id, BookUpdateRequest req) {
         Book existing = getBookDetail(id);
-        if (req.title() != null)         existing.setTitle(req.title());
-        if (req.author() != null)        existing.setAuthor(req.author());
-        if (req.content() != null)       existing.setContent(req.content());
-        if (req.coverImageUrl() != null) existing.setCoverImageUrl(req.coverImageUrl());
-        if (req.genreId() != null)       existing.setGenre(findGenre(req.genreId()));
+        if (req.title() != null) {
+            existing.setTitle(req.title());
+        }
+        if (req.author() != null) {
+            existing.setAuthor(req.author());
+        }
+        if (req.content() != null) {
+            existing.setContent(req.content());
+        }
+        if (req.coverImageUrl() != null) {
+            existing.setCoverImageUrl(req.coverImageUrl());
+        }
+        if (req.genreId() != null) {
+            existing.setGenre(findGenre(req.genreId()));
+        }
         return existing;
     }
 
@@ -70,8 +80,20 @@ public class BookService {
     @Transactional
     public Book increaseViewCount(Long id) {
         Book book = getBookDetail(id);
-        if (book.getViews() == null) book.setViews(0);
+        if (book.getViews() == null) {
+            book.setViews(0);
+        }
         book.setViews(book.getViews() + 1);
+        return book;
+    }
+
+    @Transactional
+    public Book increaseLikeCount(Long id) {
+        Book book = getBookDetail(id);
+        if (book.getLikes() == null) {
+            book.setLikes(0);
+        }
+        book.setLikes(book.getLikes() + 1);
         return book;
     }
 

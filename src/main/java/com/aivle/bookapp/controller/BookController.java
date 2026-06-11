@@ -69,4 +69,11 @@ public class BookController {
     public BookDetailResponse increaseViewCount(@PathVariable Long id) {
         return BookDetailResponse.from(bookService.increaseViewCount(id));
     }
+
+    // 도서 좋아요 증가
+    @PatchMapping({"/{id}/likes", "/{id}/like"})
+    public BookDetailResponse increaseLikeCount(@PathVariable Long id) {
+        return BookDetailResponse.from(bookService.increaseLikeCount(id));
+    }
+
 }
