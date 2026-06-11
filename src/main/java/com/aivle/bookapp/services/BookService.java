@@ -47,6 +47,9 @@ public class BookService {
         if(book.getCoverImageUrl() != null){
             existing.setCoverImageUrl(book.getCoverImageUrl());
         }
+        if(book.getLikes() != null){
+            existing.setLikes(book.getLikes());
+        }
 
         return bookRepository.save(existing);
     }
@@ -80,6 +83,18 @@ public class BookService {
             book.setViews(0);
         }
         book.setViews(book.getViews() + 1);
+
+        return bookRepository.save(book);
+    }
+
+    // 도서 좋아요 증가
+    public Book increaseLikeCount(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
+
+        if (book.getLikes() == null) {
+            book.setLikes(0);
+        }
+        book.setLikes(book.getLikes() + 1);
 
         return bookRepository.save(book);
     }
