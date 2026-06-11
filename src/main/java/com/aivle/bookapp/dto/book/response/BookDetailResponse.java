@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public record BookDetailResponse(
         Long id, String title, String author, String content,
         Long genreId, String genre, String coverImageUrl,
-        Integer views, LocalDateTime createdAt, LocalDateTime updatedAt
+        Integer views, Integer likes, LocalDateTime createdAt, LocalDateTime updatedAt
 ) {
     public static BookDetailResponse from(Book book) {
         Genre genre = book.getGenre();
@@ -21,6 +21,7 @@ public record BookDetailResponse(
                 genre.getName(),
                 book.getCoverImageUrl(),
                 book.getViews(),
+                book.getLikes(),
                 book.getCreatedAt(),
                 book.getUpdatedAt());
     }
