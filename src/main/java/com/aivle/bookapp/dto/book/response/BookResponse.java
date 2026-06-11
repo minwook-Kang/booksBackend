@@ -4,7 +4,7 @@ import com.aivle.bookapp.domain.Book;
 
 public record BookResponse(
         Long id, String title, String author,
-        String genre, Integer views
+        String genre, Integer views, Integer likes
 ) {
     public static BookResponse from(Book book) {
         return new BookResponse(
@@ -12,6 +12,7 @@ public record BookResponse(
                 book.getTitle(),
                 book.getAuthor(),
                 book.getGenre().getName(),
-                book.getViews());
+                book.getViews(),
+                book.getLikes());
     }
 }
