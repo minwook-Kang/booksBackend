@@ -13,12 +13,7 @@ permissions:
     mode: 755
 
 hooks:
-  ApplicationStop:
-    - location: deploy-scripts/stop.sh
-      timeout: 60
-      runas: ec2-user
-
   ApplicationStart:
-    - location: deploy-scripts/start.sh
+    - location: deploy-scripts/application-start-hook.sh
       timeout: 120
       runas: ec2-user
