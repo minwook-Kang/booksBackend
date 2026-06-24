@@ -108,6 +108,9 @@ public class BookService {
     }
 
     public List<String> getGenres() {
-        return bookRepository.findDistinctGenres();
+        return genreRepository.findAll()
+                .stream()
+                .map(Genre::getName)
+                .toList();
     }
 }
