@@ -9,8 +9,15 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // 모든 API 경로 허용
-                .allowedOrigins("http://localhost:5173")
+        registry.addMapping("/**")
+                .allowedOriginPatterns(
+                        "http://localhost:*",
+                        "http://127.0.0.1:*",
+                        "http://*.s3-website-*.amazonaws.com",
+                        "https://*.s3-website-*.amazonaws.com",
+                        "http://*.cloudfront.net",
+                        "https://*.cloudfront.net"
+                )
                 .allowedMethods("GET", "POST", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
