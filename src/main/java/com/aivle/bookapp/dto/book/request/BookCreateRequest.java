@@ -7,6 +7,6 @@ public record BookCreateRequest(
         @NotBlank String title,
         @NotBlank String author,
         @NotBlank String content,
-        @NotNull Long genreId,
+        @NotBlank String genre,
         String coverImageUrl
 ) {}
