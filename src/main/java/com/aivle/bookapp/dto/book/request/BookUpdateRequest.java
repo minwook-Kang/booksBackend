@@ -5,5 +5,6 @@ public record BookUpdateRequest(
         String author,
         String content,
         Long genreId,
+        String genre,
         String coverImageUrl
 ) {}

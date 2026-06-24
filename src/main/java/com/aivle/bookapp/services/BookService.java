@@ -27,7 +27,7 @@ public class BookService {
         book.setAuthor(req.author());
         book.setContent(req.content());
         book.setCoverImageUrl(req.coverImageUrl());
-        book.setGenre(findGenre(req.genreId()));
+        book.setGenre(resolveGenre(req.genreId(), req.genre()));
         return bookRepository.save(book);
     }
 
@@ -47,7 +47,9 @@ public class BookService {
             existing.setCoverImageUrl(req.coverImageUrl());
         }
         if (req.genreId() != null) {
-            existing.setGenre(findGenre(req.genreId()));
+            existing.setGenre(resolveGenre(req.genreId(), req.genre()));
+        } else if (req.genre() != null && !req.genre().isBlank()) {
+            existing.setGenre(resolveGenre(null, req.genre()));
         }
         return existing;
     }
@@ -105,6 +107,17 @@ public class BookService {
     private Genre findGenre(Long genreId) {
         return genreRepository.findById(genreId)
                 .orElseThrow(GenreNotFoundException::new);
+    }
+
+    private Genre resolveGenre(Long genreId, String genreName) {
+        if (genreId != null) {
+            return findGenre(genreId);
+        }
+        if (genreName != null && !genreName.isBlank()) {
+            return genreRepository.findByName(genreName.trim())
+                    .orElseThrow(GenreNotFoundException::new);
+        }
+        throw new GenreNotFoundException();
     }
 
     public List<String> getGenres() {
