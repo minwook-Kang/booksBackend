@@ -16,4 +16,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     );
 
     List<Book> findByGenreId(Long genreId);
+
+    @Query("select distinct b.genre from Book b where b.genre is not null")
+    List<String> findDistinctGenres();
 }

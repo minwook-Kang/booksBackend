@@ -27,6 +27,11 @@ public class BookController {
                 .map(BookResponse::from).toList();
     }
 
+    @GetMapping("/genres")
+    public ResponseEntity<List<String>> getGenres() {
+        return ResponseEntity.ok(bookService.getGenres());
+    }
+
     // 상세 조회: GET /books/{id}
     @GetMapping("/{id}")
     public BookDetailResponse bookDetail(@PathVariable Long id) {

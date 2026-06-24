@@ -106,4 +106,8 @@ public class BookService {
         return genreRepository.findById(genreId)
                 .orElseThrow(GenreNotFoundException::new);
     }
+
+    public List<String> getGenres() {
+        return bookRepository.findDistinctGenres();
+    }
 }
